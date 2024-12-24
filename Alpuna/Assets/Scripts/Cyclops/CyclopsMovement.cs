@@ -18,7 +18,7 @@ public class CyclopsMovement : MonoBehaviour
         movementSpeed = 1f;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();  // Animator bileşenini alıyoruz
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -33,8 +33,8 @@ public class CyclopsMovement : MonoBehaviour
         if (playerDistance <= aggroRadius || chaseStarted)
         {
             chaseStarted = true;
-            animator.StopPlayback();
-
+            animator.SetBool("PlayerInRange", true);
+            
             // Oyuncu range içinde, hareket etmeye başla
             Vector3 direction = (player.position - transform.position).normalized;
 
@@ -49,9 +49,6 @@ public class CyclopsMovement : MonoBehaviour
 
             // Yüzünü karaktere dönsün
             RotateTowardsPlayer(direction);
-
-            // Hareket başladı, animasyonu değiştirelim
-            animator.SetBool("PlayerInRange", true);
         }
         else
         {
